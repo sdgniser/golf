@@ -28,4 +28,4 @@ def index_view(request):
 
 def problem_view(request, pid):
     prob = Problem.objects.get(id=pid)
-    return render(request, 'main/prob.html', {'p': prob})
+    return render(request, 'main/prob.htm', {'p': prob})
