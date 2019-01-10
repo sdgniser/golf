@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NISER CodeGolf</title>
+  </head>
+  <body>
+    <header>
+      <h1>CodeGolf Competition</h1>
+    </header>
+    <main>
+    <p>  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form></p>
+    </main>
+    <footer>
+      <small>Coding Club, NISER</small>
+    </footer>
+    </body>
+</html>
+
