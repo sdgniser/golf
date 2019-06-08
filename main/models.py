@@ -13,7 +13,8 @@ class Solution(models.Model):
     prob = models.ForeignKey(Problem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lang = models.CharField(max_length=16)
-    code = models.TextField(max_length=2000)
+    code = models.FileField(upload_to='code/')
+    is_correct = models.BooleanField(default=None)
 
     def __str__(self):
         return str(self.prob) + ' by ' + str(self.user)

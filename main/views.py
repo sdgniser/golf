@@ -1,9 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 
-
+from .forms import *
 from .models import *
 
 class SignUp(CreateView):
@@ -17,4 +18,17 @@ def index_view(request):
 
 def problem_view(request, pid):
     prob = Problem.objects.get(id=pid)
-    return render(request, 'main/prob.htm', {'p': prob})
+
+    if request.method == 'POST':
+        form = SolutionForm(request.POST, request.FILES)
+        if form.is_valid():
+            Solution.objects.create(prob=prob, user=request.user,
+                    lang=form.cleaned_data['lang'],
+                    code=form.cleaned_data['code'], is_correct=False)
+
+            return HttpResponseRedirect(reverse('home'))
+
+    else:
+        form = SolutionForm()
+
+    return render(request, 'main/prob.htm', {'p': prob, 's_form': form,})
