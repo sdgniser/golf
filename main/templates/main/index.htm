@@ -13,7 +13,7 @@ for a full description, and to submit your code.</p>
 <ol>
   {% for p in p_list %}
   <li>
-    <a href="{% url 'problem' p.id %}">{{ p.title }}</a>
+    <a href="{% url 'main:problem' p.id %}">{{ p.title }}</a>
   </li>
   {% endfor %}
 </ol>

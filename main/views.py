@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from users.forms import CustomUserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -8,7 +8,7 @@ from .forms import *
 from .models import *
 
 class SignUp(CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'main/signup.htm'
 
@@ -24,16 +24,18 @@ def problem_view(request, pid):
         if form.is_valid():
             code = form.cleaned_data['code']
 
-            # Logic to count the number of characters in the file
             codefile = code.read()
-            char_count = len(codefile.decode('utf-8', 'strict'))
+            try:
+                char_count = len(codefile.decode('utf-8', 'strict'))
 
-            # Creating the Solution object
-            Solution.objects.create(prob=prob, user=request.user,
-                    lang=form.cleaned_data['lang'], code=code,
-                    char_count=char_count)
+                # Creating the Solution object
+                Solution.objects.create(prob=prob, user=request.user,
+                        lang=form.cleaned_data['lang'], code=code,
+                        char_count=char_count)
+            except UnicodeDecodeError:
+                HttpResponseRedirect(reverse('main:home'))
 
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('main:home'))
 
     else:
         form = SolutionForm()

@@ -9,8 +9,8 @@
 
 <p class="markdown">{{ p.text }}</p>
 
-<p><a href="{% url 'leaderboard' p.id %}">Click here</a> for this problem's
-leaderboard</p>
+<p><a href="{% url 'main:leaderboard' p.id %}">Click here</a> for this
+problem's leaderboard</p>
 
 <div>
   {% if user.is_authenticated %}
@@ -21,7 +21,7 @@ leaderboard</p>
     <button type="submit">Submit</button>
   </form>
   {% else %}
-  <p><a href="{% url 'login' %}">Log In</a> to submit a solution.</p>
+  <p><a href="{% url 'users:login' %}">Log In</a> to submit a solution.</p>
   {% endif %}
 </div>
 

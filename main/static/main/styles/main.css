@@ -1,3 +1,4 @@
+/* Makes navbar links equally spaced */
 nav ul {
   display: flex;
 }
@@ -8,7 +9,23 @@ nav ul li {
   margin: 0 auto;
 }
 
+/* Makes the rankings table t h i c c */
 table#rankings {
   display: table;
   width: 100%;
+}
+
+/* Styling for comma-separated lists */
+ul.comma,
+ul.comma > li {
+  display: inline;
+}
+
+ul.comma {
+  list-style: none;
+  padding: 0;
+}
+
+ul.comma > li:not(:last-child)::after {
+  content: ', ';
 }

@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 class Problem(models.Model):
     title = models.CharField(max_length=256)
@@ -11,7 +12,7 @@ class Problem(models.Model):
 
 class Solution(models.Model):
     prob = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     lang = models.CharField(max_length=16)
     code = models.FileField(upload_to='code/')
     char_count = models.IntegerField()
