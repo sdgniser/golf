@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/awsm.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/main.css' %}">
+
+    <title>
+      {% block title %}{% endblock %} | NISER CodeGolf
+    </title>
+  </head>
+
+  <body>
+    <header>
+      <h1>NISER CodeGolf</h1>
+      {% if user.is_authenticated %}
+      <p>Hello, {{user.username}}!</p>
+      {% else %}
+      {% endif %}
+
+      <nav>
+        <ul>
+          <li>
+            <a href="{% url 'home' %}">Home</a>
+          </li>
+          <li>
+            <a href="#">Leaderboard</a>
+          </li>
+
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'login' %}">Login</a>
+          </li>
+          <li>
+            <a href="{% url 'signup' %}">Sign Up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <footer>
+      NISER Coding Club
+    </footer>
+  </body>
+</html>

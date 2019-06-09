@@ -1,34 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{{ p.title }} | CodeGolf</title>
-  </head>
-  <body>
-    <header>
-      <h1>{{ p.title }}</h1>
-    </header>
-    <main>
-      <div>
-        <p class="markdown">{{ p.text }}</p>
-      </div>
+{% extends 'main/base.htm' %}
 
-      <div>
-        {% if user.is_authenticated %}
-        <p>Submit your code here</p>
-        <form enctype="multipart/form-data" method="post">
-          {% csrf_token %}
-          {{ s_form.as_p }}
-          <button type="submit">Submit</button>
-        </form>
-        {% else %}
-        <p><a href="{% url 'login' %}">Log In</a> to submit a solution.</p>
-        {% endif %}
-      </div>
-    </main>
-    <footer>
-      <small>Coding Club, NISER</small>
-    </footer>
-    </body>
-</html>
+{% block title %}
+{{ p.title }}
+{% endblock %}
 
+{% block content %}
+<h2>{{ p.title }}</h2>
+
+<p class="markdown">{{ p.text }}</p>
+
+<div>
+  {% if user.is_authenticated %}
+  <form enctype="multipart/form-data" method="post">
+    <legend>Submit Your Code Here</legend>
+    {% csrf_token %}
+    {{ s_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+  {% else %}
+  <p><a href="{% url 'login' %}">Log In</a> to submit a solution.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,33 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>NISER CodeGolf</title>
-  </head>
-  <body>
-    <header>
-      <h1>CodeGolf Competition</h1>
-    </header>
-    <main>
-    <p>
-      {% if user.is_authenticated %}
-        Hello, {{user.username}}!
-        <p><a href="{% url 'logout' %}"> Log Out </a></p>
-      {% else %}
-        <a href="{% url 'login' %}"> Log In </a><br>
-        <a href="{% url 'signup' %}"> Sign Up </a>
-      {% endif %}
-      <div id="problem-list">
-        {% for p in p_list %}
-          <div class="problem-block">
-            <a href="{% url 'problem' p.id %}">{{ p.title }}</a>
-          </div>
-        {% endfor %}
-      </div>
-    </p>
-    </main>
-    <footer>
-      <small>Coding Club, NISER</small>
-    </footer>
-    </body>
-</html>
+{% extends 'main/base.htm' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<h2>Problems</h2>
+{% if p_list %}
+<p>Here is the list of problems open for the competition now. Follow the links
+for a full description, and to submit your code.</p>
+<ol>
+  {% for p in p_list %}
+  <li>
+    <a href="{% url 'problem' p.id %}">{{ p.title }}</a>
+  </li>
+  {% endfor %}
+</ol>
+{% else %}
+<p>There are no problems open in the competition now. Check back later!</p>
+{% endif %}
+
+{% endblock %}
