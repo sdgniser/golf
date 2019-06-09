@@ -9,6 +9,9 @@
 
 <p class="markdown">{{ p.text }}</p>
 
+<p><a href="{% url 'leaderboard' p.id %}">Click here</a> for this problem's
+leaderboard</p>
+
 <div>
   {% if user.is_authenticated %}
   <form enctype="multipart/form-data" method="post">

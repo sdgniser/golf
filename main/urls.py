@@ -8,5 +8,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='main/login.htm')),
     path('signup/', views.SignUp.as_view(), name='signup'),
     path('', include('django.contrib.auth.urls')),
-    path('p/<pid>/', views.problem_view, name='problem')
+    path('p/<pid>/', views.problem_view, name='problem'),
+    path('leaderboard/<pid>/', views.leader_view, name='leaderboard'),
 ]

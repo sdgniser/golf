@@ -15,8 +15,9 @@
     <header>
       <h1>NISER CodeGolf</h1>
       {% if user.is_authenticated %}
-      <p>Hello, {{user.username}}!</p>
+      <p>Hello, {{user.username}}! Is your code short enough?</p>
       {% else %}
+      <p>Keep the number of strokes as low as possible to win.</p>
       {% endif %}
 
       <nav>

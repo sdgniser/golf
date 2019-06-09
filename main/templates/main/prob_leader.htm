@@ -1,0 +1,34 @@
+{% extends 'main/base.htm' %}
+
+{% block title %}
+Leaderboard for {{ p.title }}
+{% endblock %}
+
+{% block content %}
+
+<h2>Leaderboard for <em>{{ p.title }}</em></h2>
+{% if s_list %}
+<p>Current standings for <a href="{% url 'problem' p.id %}">the
+  problem</a>.</p> <table id="rankings">
+  <tr>
+    <th>Rank</th>
+    <th>Username</th>
+    <th>Character Count</th>
+    <th>Language</th>
+    <th>Source File</th>
+  </tr>
+  {% for s in s_list %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ s.user }}</td>
+    <td>{{ s.char_count }}</td>
+    <td>{{ s.lang }}</td>
+    <td><a href="#">File</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>There are no verified solutions to this problem yet.</p>
+{% endif %}
+
+{% endblock %}

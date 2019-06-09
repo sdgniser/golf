@@ -7,3 +7,8 @@ nav ul li {
   text-align: center;
   margin: 0 auto;
 }
+
+table#rankings {
+  display: table;
+  width: 100%;
+}

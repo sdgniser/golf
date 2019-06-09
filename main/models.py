@@ -14,7 +14,8 @@ class Solution(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lang = models.CharField(max_length=16)
     code = models.FileField(upload_to='code/')
-    is_correct = models.BooleanField(default=None)
+    char_count = models.IntegerField()
+    is_correct = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.prob) + ' by ' + str(self.user)
