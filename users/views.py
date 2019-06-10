@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
 
 from .forms import CustomUserCreationForm
@@ -9,11 +8,11 @@ from main.models import *
 class SignUp(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('users:login')
-    template_name = 'main/signup.htm'
+    template_name = 'signup.htm'
 
 class UserView(DetailView):
     model = get_user_model()
-    template_name = 'main/user.htm'
+    template_name = 'user.htm'
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):

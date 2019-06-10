@@ -1,20 +1,13 @@
-from users.forms import CustomUserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
+from django.urls import reverse
 
 from .forms import *
 from .models import *
 
-class SignUp(CreateView):
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'main/signup.htm'
-
 def index_view(request):
     prob_list = Problem.objects.all()
-    return render(request, 'main/index.htm', {'p_list': prob_list})
+    return render(request, 'index.htm', {'p_list': prob_list})
 
 def problem_view(request, pid):
     prob = Problem.objects.get(id=pid)
@@ -40,12 +33,12 @@ def problem_view(request, pid):
     else:
         form = SolutionForm()
 
-    return render(request, 'main/prob.htm', {'p': prob, 's_form': form,})
+    return render(request, 'prob.htm', {'p': prob, 's_form': form,})
 
 def leader_view(request, pid):
     prob = Problem.objects.get(id=pid)
     solns = Solution.objects.order_by('char_count').filter(prob__id=pid,
             is_correct=True)
 
-    return render(request, 'main/prob_leader.htm', 
+    return render(request, 'prob_leader.htm', 
             {'p': prob, 's_list': solns})
