@@ -1,0 +1,17 @@
+{% extends 'base.htm' %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block content %}
+<h2>Sign Up</h2>
+<p>Sign up for a new account to submit your code and compete in the
+competition.</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign Up</button>
+</form>
+
+{% endblock %}

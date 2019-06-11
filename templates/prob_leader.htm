@@ -1,0 +1,35 @@
+{% extends 'base.htm' %}
+
+{% block title %}
+Leaderboard for {{ p.title }}
+{% endblock %}
+
+{% block content %}
+
+<h2>Leaderboard for <em>{{ p.title }}</em></h2>
+{% if s_list %}
+<p>Current standings for <a href="{% url 'main:problem' p.id %}">the
+  problem</a>.</p> <table id="rankings">
+  <tr>
+    <th>Rank</th>
+    <th>Username</th>
+    <th>Full Name</th>
+    <th>Character Count</th>
+    <th>Language</th>
+  </tr>
+  {% for s in s_list %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td><a href="{% url 'users:profile' s.user.username %}">
+        {{ s.user }}</a></td>
+    <td>{{ s.user.first_name }} {{ s.user.last_name }}</td>
+    <td>{{ s.char_count }}</td>
+    <td>{{ s.lang }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>There are no verified solutions to this problem yet.</p>
+{% endif %}
+
+{% endblock %}
