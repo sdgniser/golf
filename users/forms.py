@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import CustomUser
 
+# Custom Creation and Change forms because of the custom user model.
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:

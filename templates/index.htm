@@ -7,18 +7,23 @@ Home
 {% block content %}
 
 <h2>Problems</h2>
+
 {% if p_list %}
 <p>Here is the list of problems open for the competition now. Follow the links
 for a full description, and to submit your code.</p>
 <ol>
+
   {% for p in p_list %}
   <li>
     <a href="{% url 'main:problem' p.id %}">{{ p.title }}</a>
   </li>
+
   {% endfor %}
 </ol>
+
 {% else %}
 <p>There are no problems open in the competition now. Check back later!</p>
+
 {% endif %}
 
 {% endblock %}

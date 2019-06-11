@@ -16,19 +16,19 @@ class UserView(DetailView):
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
+        """
+        Adds the following to the context:
+        * List of problems solved by the user: p_list
+        * List of languages used: langs
+        * Total character count across all solutions: total_count
+        * Character count per solution submitted: avg_count
+        """
         context = super().get_context_data(**kwargs)
         current_user = context['user']
 
-        # Logic to get list of problems solved
-        probs = Problem.objects.filter(solution__is_correct=True,
+        # Gets the list of problems solved correctly
+        p_list = Problem.objects.filter(solution__is_correct=True,
                 solution__user=current_user)
-        p_list_dummy = []
-        p_list = []
-        for prob in probs:
-            if prob.title not in p_list_dummy:
-                p_list.append(prob)
-                p_list_dummy.append(prob.title)
-        
         context['p_list'] = p_list
 
         # Logic to get list of programming languages used
