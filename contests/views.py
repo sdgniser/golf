@@ -56,6 +56,7 @@ class ContestDetail(DetailView):
         context = super().get_context_data(**kwargs)
 
         contest = context['contest']
+        context['winners'] = contest.winners.all()
         contest_probs = Problem.objects.filter(contest=contest)
         context['contest_probs'] = contest_probs
         return context
