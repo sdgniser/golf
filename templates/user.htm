@@ -5,11 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+<h3>{{ user.first_name }} {{ user.last_name }}</h3>
 
-{% if user.bio %}
 <p>{{ user.bio }}</p>
-{% endif %}
 
 <ul>
   {% if p_list %}
@@ -20,7 +18,7 @@
     <strong>Problems Solved:</strong>
     <ul class="comma">
       {% for p in p_list %}
-      <li><em><a href="{% url 'main:problem' p.id %}">
+      <li><em><a href="{% url 'contests:problem' p.id %}">
             {{ p.title }}</a></em></li> {% endfor %}
     </ul>
   </li>

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
 
 from .forms import CustomUserCreationForm
-from main.models import *
+from contests.models import *
 
 class SignUp(CreateView):
     form_class = CustomUserCreationForm

@@ -1,0 +1,49 @@
+{% extends 'base.htm' %}
+
+{% block title %}
+{{ state|title }} Contests
+{% endblock %}
+
+{% block content %}
+
+<h2>Contests</h2>
+
+<ul class="subnav">
+  {% for s in all_states %}
+  <li>
+    {% if s == state %}
+    <strong>{{ s|title }}</strong>
+    {% else %}
+    <a href="{% url 'contests:'|add:s %}">
+      {{ s|title }}
+    </a>
+    {% endif %}
+  </li>
+
+  {% endfor %}
+</ul>
+
+{% if contests %}
+<ul>
+  {% for contest in contests %}
+  <li>
+    <a href="{% url 'contests:contest' contest.id %}">
+    {{ contest.title }}</a> 
+    {% if state == 'future' %}
+    (Contest starts {{ contest.start }})
+
+    {% elif state == 'past' %}
+    (Contest ended {{ contest.end }})
+
+    {% endif %}
+  </li>
+
+  {% endfor %}
+</ul>
+
+{% else %}
+<p>No {{ state }} contests here.</p>
+
+{% endif %}
+
+{% endblock %}

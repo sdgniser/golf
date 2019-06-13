@@ -23,10 +23,15 @@
       <nav>
         <ul>
           <li>
-            <a href="{% url 'main:home' %}">Home</a>
+            <a href="{% url 'contests:home' %}">Home</a>
           </li>
+
           <li>
-            <a href="#">Leaderboard</a>
+            <a href="{% url 'contests:active' %}">Contests</a>
+          </li>
+
+          <li>
+            <a href="">Leaderboard</a>
           </li>
 
           {% if user.is_authenticated %}

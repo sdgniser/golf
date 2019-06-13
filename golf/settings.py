@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local
-    'main.apps.MainConfig',
     'users.apps.UsersConfig',
+    'contests.apps.ContestsConfig',
 ]
 
 MIDDLEWARE = [
