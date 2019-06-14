@@ -9,12 +9,12 @@ from .forms import *
 from .models import *
 
 
-class ContestList(ListView):
-    model = Contest
-    template_name = 'contest_list.htm'
-    all_states = ['active', 'future', 'past', 'all']
-    state = 'all'
-    context_object_name = 'contests'
+class ProblemList(ListView):
+    model = Problem
+    template_name = 'prob_list.htm'
+    all_states = ['active', 'future', 'past']
+    state = 'active'
+    context_object_name = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,46 +22,32 @@ class ContestList(ListView):
         context['state'] = self.state
         return context
 
-class ActiveContestList(ContestList):
+class ActiveProblemList(ProblemList):
     state = 'active'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contests'] = Contest.objects.filter(start__lte =
-                now(), end__gte = now())
+        context['probs'] = Problem.objects.filter(start__lt = now(),
+                end__gt = now())
         return context
 
-class PastContestList(ContestList):
+class PastProblemList(ProblemList):
     state = 'past'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contests'] = Contest.objects.filter(end__lt = now())
+        context['probs'] = Problem.objects.filter(end__lt = now())
         return context
 
-class FutureContestList(ContestList):
+class FutureProblemList(ProblemList):
     state = 'future'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contests'] = Contest.objects.filter(start__gt = now()) 
+        context['probs'] = Problem.objects.filter(start__gt = now()) 
         return context
 
-class ContestDetail(DetailView):
-    model = Contest
-    template_name = 'contest_detail.htm'
-    context_object_name = 'contest'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        contest = context['contest']
-        context['winners'] = contest.winners.all()
-        contest_probs = Problem.objects.filter(contest=contest)
-        context['contest_probs'] = contest_probs
-        return context
-
-def problem_view(request, pid):
+def problem_detail(request, pid):
     """
     Displays the problem. Provides a form to record the solution if a user is
     logged in. Accepts a UTF-8 encoded plaintext file as solution.
@@ -100,7 +86,7 @@ def problem_view(request, pid):
                 return HttpResponseRedirect(reverse('contests:problem', 
                     args=(pid,)))
 
-            # If the following two commands execute everything went nicely.
+            # Everything went nicely!
             messages.success(request, 'Your solution has been recorded\
             successfully. It will appear in the leaderboard once it is\
             verified to be working by one of the moderators.')
@@ -118,13 +104,13 @@ def problem_view(request, pid):
                 repeat_submission = True
                 form = None
 
-    return render(request, 'prob.htm', {'p': prob, 's_form': form,
+    return render(request, 'prob_detail.htm', {'p': prob, 's_form': form,
                     'repeat_submission': repeat_submission,})
 
-def leader_view(request, pid):
+def problem_leader_view(request, pid):
     prob = Problem.objects.get(id=pid)
-    solns = Solution.objects.order_by('char_count').filter(prob__id=pid,
-            is_correct=True)
+    ranked_solutions = Solution.objects.filter(prob=prob,
+            is_correct=True).order_by('char_count', 'sub_time')
 
-    return render(request, 'prob_leader.htm', {'p': prob, 's_list': solns,
-        'is_active': prob.is_active()})
+    return render(request, 'prob_leader.htm', {'prob': prob, 'solns':
+        ranked_solutions})

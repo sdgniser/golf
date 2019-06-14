@@ -17,6 +17,10 @@ ul.subnav {
   display: flex;
 }
 
+ul.prematter {
+  margin: .8rem auto;
+}
+
 
 /* Makes the rankings table t h i c c */
 table#rankings {

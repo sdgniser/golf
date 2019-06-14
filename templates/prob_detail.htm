@@ -5,7 +5,35 @@
 {% endblock %}
 
 {% block content %}
-<h2>{{ p.title }}</h2>
+<h3>{{ p.title }}</h3>
+
+<ul class="prematter">
+  {% if p.is_active %}
+  <li>Problem open till {{ p.end }}</li>
+
+  {% elif p.is_past %}
+  <li>Problem closed {{ p.end }}</li>
+
+  {% endif %}
+
+  <li>
+    {% if p.leaders %}
+    Contest leaders{{ p.leaders|pluralize }}:
+    <ul class="comma">
+
+      {% for user in p.leaders %}
+      <li><a href="{% url 'users:profile' user.username %}">
+          {{ user }}</a></li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+    There aren't any verified solutions for this problem yet.
+
+    {% endif %}
+  </li>
+
+</ul>
 
 <p class="markdown">{{ p.text }}</p>
 
@@ -19,15 +47,15 @@
     <button type="submit">Submit</button>
   </form>
 
+  {% elif p.is_past %}
+  <p><em>The competition for this problem is already over. Go to the 
+    <a href="{% url 'contests:home' %}">main page</a> for fresh
+    problems.</em></p>
+
   {% elif repeat_submission %}
   <p><em>You have already submitted a solution to this problem once. If it is
     not on the leaderboard, one of our moderators may not have verified it to
     be working yet.</em></p> 
-
-  {% elif p.is_past %}
-  <p><em>The competition for this problem is already over. Go to the 
-    <a href="{% url 'contests:home' %}">main page</a> for fresh
-    contests.</em></p>
 
   {% elif p.is_upcoming %}
   <p><em>You should not be seeing this.</em><p>
