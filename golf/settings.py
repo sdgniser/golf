@@ -135,3 +135,7 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 from .local_settings import *
+
+# Configure app for Heroku
+import django_heroku
+django_heroku.settings(locals())
