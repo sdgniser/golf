@@ -96,8 +96,8 @@ class Solution(DirtyFieldsMixin, models.Model):
             avg_char_count = mean(char_count_array)
             sd_char_count = stdev(char_count_array)
     
-        mult = 1 + ((MULT-1)/2) + ((MULT-1)/2) 
-                 * tanh((avg_char_count - char_count) / sd_char_count)
+        mult = (1 + ((MULT-1)/2) + ((MULT-1)/2) 
+                 * tanh((avg_char_count - char_count) / sd_char_count))
 
         return round(prob.base_score * mult, 0)
 
