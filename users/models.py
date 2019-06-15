@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     bio = models.TextField(default='')
+    score = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('users:profile', kwargs={'pk': self.username})

@@ -114,3 +114,7 @@ def problem_leader_view(request, pid):
 
     return render(request, 'prob_leader.htm', {'prob': prob, 'solns':
         ranked_solutions})
+
+def user_leader_view(request):
+    users = get_user_model().objects.all().order_by('-score')
+    return render(request, 'user_leader.htm', {'users': users})

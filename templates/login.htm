@@ -6,11 +6,17 @@ Login
 
 {% block content %}
 <h2>Login</h2>
-<p>Login to your account to submit your code</p>
+{% if user.is_authenticated %}
+<p>You are already logged in. Go to the <a href="{% url 'contests:home' %}">main page</a> for fresh problems.</p>
+
+{% else %}
+<p>Login to your account to submit your code.</p>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Login</button>
 </form>
+
+{% endif %}
 
 {% endblock %}

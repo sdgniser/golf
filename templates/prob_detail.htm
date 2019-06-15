@@ -17,15 +17,8 @@
   {% endif %}
 
   <li>
-    {% if p.leaders %}
-    Contest leaders{{ p.leaders|pluralize }}:
-    <ul class="comma">
-
-      {% for user in p.leaders %}
-      <li><a href="{% url 'users:profile' user.username %}">
-          {{ user }}</a></li>
-      {% endfor %}
-    </ul>
+    {% if p.leader %}
+    Problem leader: <a href="{% url 'users:profile' p.leader.username %}">{{p.leader}}</a>
 
     {% else %}
     There aren't any verified solutions for this problem yet.

@@ -15,7 +15,10 @@
     <header>
       <h1>NISER CodeGolf</h1>
       {% if request.user.is_authenticated %}
-      <p>Hello, {{request.user.username}}! Is your code short enough?</p>
+      <p>
+        Hello, {{request.user.username}}! Is your code short enough?
+        <a href="{% url 'users:profile' request.user.username %}">Profile.</a>
+      </p>
       {% else %}
       <p>Keep the number of strokes as low as possible to win.</p>
       {% endif %}
@@ -27,11 +30,7 @@
           </li>
 
           <li>
-            <a href="{% url 'contests:active' %}">Problems</a>
-          </li>
-
-          <li>
-            <a href="">Leaderboard</a>
+            <a href="{% url 'contests:user_leader' %}">Leaderboard</a>
           </li>
 
           {% if request.user.is_authenticated %}
@@ -60,6 +59,7 @@
         </li>
 
         {% endfor %}
+      </ul>
 
       {% endif %}
 

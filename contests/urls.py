@@ -13,4 +13,6 @@ urlpatterns = [
     path('p/<pid>/', problem_detail, name='problem'),
     path('p/<pid>/leaderboard/', problem_leader_view, name='prob_leader'),
 
+    path('leaderboard/', user_leader_view, name='user_leader'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
