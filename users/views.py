@@ -27,17 +27,16 @@ class UserView(DetailView):
     def get_context_data(self, **kwargs):
         """
         Adds the following to the context:
+        * is_logged_in
         * List of problems solved by the user: p_list
         * List of languages used: langs
         * Total character count across all solutions: total_count
         * Character count per solution submitted: avg_count
-        * is_logged_in
         """
         context = super().get_context_data(**kwargs)
         current_user = context['user']
 
         context['is_logged_in'] = (self.request.user == context['user'])
-        print(context['is_logged_in'])
 
         # Gets the list of problems solved correctly
         p_list = Problem.objects.filter(solution__is_correct=True,
