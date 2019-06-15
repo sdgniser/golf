@@ -3,6 +3,8 @@
 # local_settings.py in the same folder and modify as required.
 
 import os
+import psycopg2
+import dj_database_url
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '+eo5lhh%vc4vo(%=km4-xj)yy2ox=4974#_n$!ko#4ke5zi(#8')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != False
@@ -30,6 +32,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)# Heroku: Update database configuration from $DATABASE_URL.
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
