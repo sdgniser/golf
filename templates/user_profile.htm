@@ -7,7 +7,13 @@
 {% block content %}
 <h3>{{ user.first_name }} {{ user.last_name }}</h3>
 
-<p>{{ user.bio }}</p>
+<p>
+  {{ user.bio }}
+
+  {% if is_logged_in %}
+  <a href="{% url 'users:update' %}">Edit Profile</a>
+  {% endif %}
+</p>
 
 <ul>
   {% if p_list %}

@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from contests.models import *
 
 class SignUp(CreateView):
@@ -10,9 +10,18 @@ class SignUp(CreateView):
     success_url = reverse_lazy('users:login')
     template_name = 'signup.htm'
 
+class UserUpdateView(UpdateView):
+    form_class = CustomUserChangeForm
+    model = get_user_model()
+    template_name = 'user_update.htm'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 class UserView(DetailView):
     model = get_user_model()
-    template_name = 'user.htm'
+    template_name = 'user_profile.htm'
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
@@ -22,9 +31,13 @@ class UserView(DetailView):
         * List of languages used: langs
         * Total character count across all solutions: total_count
         * Character count per solution submitted: avg_count
+        * is_logged_in
         """
         context = super().get_context_data(**kwargs)
         current_user = context['user']
+
+        context['is_logged_in'] = (self.request.user == context['user'])
+        print(context['is_logged_in'])
 
         # Gets the list of problems solved correctly
         p_list = Problem.objects.filter(solution__is_correct=True,

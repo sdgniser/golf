@@ -14,8 +14,8 @@
   <body>
     <header>
       <h1>NISER CodeGolf</h1>
-      {% if user.is_authenticated %}
-      <p>Hello, {{user.username}}! Is your code short enough?</p>
+      {% if request.user.is_authenticated %}
+      <p>Hello, {{request.user.username}}! Is your code short enough?</p>
       {% else %}
       <p>Keep the number of strokes as low as possible to win.</p>
       {% endif %}
@@ -34,7 +34,7 @@
             <a href="">Leaderboard</a>
           </li>
 
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
           <li>
             <a href="{% url 'users:logout' %}">Logout</a>
           </li>
