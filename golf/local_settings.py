@@ -6,7 +6,7 @@ import os
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '+eo5lhh%vc4vo(%=km4-xj)yy2ox=4974#_n$!ko#4ke5zi(#8')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != False
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = ['nisergolf.herokuapp.com', '127.0.0.1']
 
 # Stuff about the database
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
