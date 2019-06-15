@@ -13,8 +13,8 @@ class Problem(models.Model):
     title = models.CharField(max_length=256)
     text = models.TextField(max_length=2000)
     base_score = models.IntegerField(default=10)
-    start = models.DateTimeField(default=now())
-    end = models.DateTimeField(default=now())
+    start = models.DateTimeField(default=now)
+    end = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.title
@@ -56,7 +56,7 @@ class Solution(DirtyFieldsMixin, models.Model):
     # gen_file_name generates a random string of 12 characters. "Security".
     code = models.FileField(upload_to=gen_file_name)
     char_count = models.IntegerField()
-    sub_time = models.DateTimeField(default=now())
+    sub_time = models.DateTimeField(default=now)
     is_correct = models.BooleanField(default=False)
 
     # To detect if the field was changed. Provided by DirtyFieldsMixin.
