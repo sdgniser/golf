@@ -1,7 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
 
-from django.contrib.auth import get_user_model
+from .helpers import gen_file_name
 
 class Problem(models.Model):
     title = models.CharField(max_length=256)
@@ -37,7 +38,7 @@ class Solution(models.Model):
     prob = models.ForeignKey(Problem, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     lang = models.CharField(max_length=16)
-    code = models.FileField(upload_to='code/')
+    code = models.FileField(upload_to=gen_file_name)
     char_count = models.IntegerField()
     sub_time = models.DateTimeField(default=now())
     is_correct = models.BooleanField(default=False)
