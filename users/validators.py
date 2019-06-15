@@ -14,6 +14,7 @@ forbidden_usernames = [
 def forbid_username(username):
     if username in forbidden_usernames:
         raise ValidationError(
-                _('Nice try but, your username cannot be %(username)s.'),
+                _('Nice try, Smartypants. But your username cannot \
+                    be %(username)s.'),
                 params = {'username': username},
         )

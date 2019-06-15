@@ -29,6 +29,12 @@ class Problem(models.Model):
         return self.start > now()
 
     def leader(self):
+        """
+        Returns the user model that has a solution with the lowest character
+        count of this problem. In case of a clash, the solution which was
+        submitted earlier is preferred.
+
+        """
         ranked_leaders = get_user_model().objects.filter(solution__prob=self,
                 solution__is_correct=True).order_by('solution__char_count',
                         'solution__sub_time')
@@ -37,14 +43,23 @@ class Problem(models.Model):
 
 
 class Solution(DirtyFieldsMixin, models.Model):
+    """
+    The model and the fields should be self explanatory.
+
+    DirtyFieldsMixin has been added to calculate score when is_correct changes
+    from False to True.
+
+    """
     prob = models.ForeignKey(Problem, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     lang = models.CharField(max_length=16)
+    # gen_file_name generates a random string of 12 characters. "Security".
     code = models.FileField(upload_to=gen_file_name)
     char_count = models.IntegerField()
     sub_time = models.DateTimeField(default=now())
     is_correct = models.BooleanField(default=False)
 
+    # To detect if the field was changed. Provided by DirtyFieldsMixin.
     FIELDS_TO_CHECK = ['is_correct']
 
     def __str__(self):
@@ -55,6 +70,17 @@ class Solution(DirtyFieldsMixin, models.Model):
                 is_correct=True).aggregate(Avg('char_count'))
 
     def calc_score(self, MULT=3):
+        """
+        Calculates a score multiplier based on the solutions already submitted.
+
+        Roughly: when the submitted solution has character count much larger
+        than the average character count, the calculated score is
+        1*base_score. If the character count is much smaller than the average
+        character count, the calculated score is MULT*base_score
+
+        See code for details.
+        
+        """
         prob = Problem.objects.get(id=self.prob.id)
         all_soln = Solution.objects.filter(is_correct=True, prob=prob)
 
@@ -70,11 +96,20 @@ class Solution(DirtyFieldsMixin, models.Model):
             avg_char_count = mean(char_count_array)
             sd_char_count = stdev(char_count_array)
     
-        mult = 1 + (MULT/2) + (MULT/2)*tanh((char_count - avg_char_count)
-                                                              / sd_char_count)
+        mult = 1 + ((MULT-1)/2) + ((MULT-1)/2) 
+                 * tanh((avg_char_count - char_count) / sd_char_count)
+
         return round(prob.base_score * mult, 0)
 
     def save(self, *args, **kwargs):
+        """
+        Overriding save() to detect if is_correct was changed.
+        Calculates and increments the user's score EVERYTIME is_correct changes
+        from False to True.
+
+        Be careful while verifying solutions.
+
+        """
         score = self.calc_score()
         dirty = self.is_dirty()
         super().save(*args, **kwargs)

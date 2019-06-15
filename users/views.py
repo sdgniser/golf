@@ -32,6 +32,7 @@ class UserView(DetailView):
         * List of languages used: langs
         * Total character count across all solutions: total_count
         * Character count per solution submitted: avg_count
+
         """
         context = super().get_context_data(**kwargs)
         current_user = context['user']

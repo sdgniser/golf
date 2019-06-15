@@ -108,6 +108,14 @@ def problem_detail(request, pid):
                     'repeat_submission': repeat_submission,})
 
 def problem_leader_view(request, pid):
+    """
+    Returns a ranked list of solutions for the problem in question.
+    ranked_solutions is used by the template to construct the leaderboard
+
+    The solutions are ranked by character count (lowest first) and submission
+    time (earliest first).
+
+    """
     prob = Problem.objects.get(id=pid)
     ranked_solutions = Solution.objects.filter(prob=prob,
             is_correct=True).order_by('char_count', 'sub_time')
@@ -116,5 +124,10 @@ def problem_leader_view(request, pid):
         ranked_solutions})
 
 def user_leader_view(request):
+    """
+    Returns a ranked list of all registered users by thier 'score'.
+    For details about the calculation of score, see Solution::calc_score
+
+    """
     users = get_user_model().objects.all().order_by('-score')
     return render(request, 'user_leader.htm', {'users': users})
