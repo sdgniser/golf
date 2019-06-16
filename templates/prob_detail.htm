@@ -28,7 +28,9 @@
 
 </ul>
 
-<p class="markdown">{{ p.text }}</p>
+<p class="markdown">
+  <script>let prob_desc = '{{ p.text|escapejs }}';</script>
+</p>
 
 <div>
   {% if user.is_authenticated %}
