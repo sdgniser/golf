@@ -90,7 +90,8 @@ class Solution(DirtyFieldsMixin, models.Model):
         for s in all_soln:
             char_count_array += [s.char_count]
     
-        avg_char_count = 0 
+        from math import inf
+        avg_char_count = inf
         sd_char_count = 0.01 # Aah! Magic constant! AAAAH!
         if len(char_count_array) > 1:
             avg_char_count = mean(char_count_array)
