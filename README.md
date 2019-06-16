@@ -23,8 +23,7 @@ A simple CodeGolf frontend.
    and do `pip install -r requirements.txt`.
  * Configure `postgresql` on your machine and create a new database for this
    project.
- * Copy `golf/local_settings_example.py` to `golf/local_settings.py`, and
-   modify the database settings.
+ * Put the details of your new database in `golf/local_settings.py`
  * `cd` to the cloned repo (while you're still in virtualenv) and run: `python manage.py collectstatic`, `python manage.py makemigrations users contests`, `python manage.py migrate`
  * Start the development server: `python manage.py runserver`.
  * Let me know if you're unable to run it on your machine.
