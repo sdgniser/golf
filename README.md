@@ -1,6 +1,5 @@
 # Golf
-
-A simple CodeGolf frontend.
+**[Merged into [sdgniser/spaghetti](https://github.com/sdgniser/spaghetti)]** A simple CodeGolf frontend.
 
 ### Features Implemented
 
@@ -10,10 +9,6 @@ A simple CodeGolf frontend.
 - User profile modification forms
 - Time based problems
 - A ranking system
-
-### TODO
-
-- Achievements, badges for players
 
 #### How to run a local instance?
 
